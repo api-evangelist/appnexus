@@ -1,0 +1,65 @@
+{
+    "name": "AppNexus",
+    "description": "AppNexus is a technology company that provides trading solutions and powers marketplaces for Internet advertising. Its open, unified, and powerful programmatic platform empowers customers to more effectively buy and sell media, allowing them to innovat...",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/2633-appnexus.jpg",
+    "tags": [
+        "api service provider",
+        "have api",
+        "marketplaces"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/appnexus\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "AppNexus",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/2633-appnexus.jpg",
+            "humanURL": "http:\/\/www.appnexus.com\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/appnexus-openapi.json"
+                },
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/appnexus-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Blog",
+            "url": "http:\/\/blog.appnexus.com\/"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/appnexus"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "http:\/\/www.crunchbase.com\/company\/appnexus"
+        },
+        {
+            "type": "Email",
+            "url": "cybersec@appnexus.com"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/appnexus"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/AppNexus"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/www.appnexus.com\/"
+        }
+    ]
+}
