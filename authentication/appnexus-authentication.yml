@@ -1,0 +1,21 @@
+generated: '2026-07-17'
+method: searched
+source: https://learn.microsoft.com/xandr/digital-platform-api/authentication-service
+docs: https://learn.microsoft.com/xandr/digital-platform-api/authentication-service
+summary:
+  types: [token]
+  scheme: custom-token
+  oauth2: false
+  api_key_in: [header, cookie]
+schemes:
+  - name: token
+    type: token
+    mechanism: username-password-token-exchange
+    obtain: "POST https://api.appnexus.com/auth with JSON body {auth:{username,password}}; returns response.token"
+    carry:
+      - "Authorization: <TOKEN> request header"
+      - "session cookie (curl -b cookies -c cookies)"
+    token_lifetime: "2 hours idle; 24-hour hard expiry regardless of activity"
+    reauth_limit: "10 successful auths per 5-minute period"
+    jwt_option: https://learn.microsoft.com/xandr/digital-platform-api/token-based-api-authentication
+    error_signal: "error_id NOAUTH in response envelope signals re-authentication needed"
