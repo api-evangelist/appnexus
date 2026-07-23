@@ -1,0 +1,16 @@
+generated: '2026-07-17'
+method: searched
+source: https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+api: Digital Platform API
+environments:
+  - name: production
+    base_url: https://api.appnexus.com
+    note: "Live environment - changes affect production. Only authorized users should alter data."
+  - name: test
+    base_url: https://api-test.appnexus.com
+    note: "Test host referenced in the API documentation examples for exercising calls without touching production."
+credentials:
+  model: "Username/password issued during the API Onboarding Process; exchanged at /auth for a session token."
+  onboarding: https://learn.microsoft.com/xandr/digital-platform-api/api-onboarding-process
+notes:
+  - No public self-serve sandbox keys or synthetic test tokens are published; access requires a Xandr member account.

@@ -1,0 +1,23 @@
+generated: '2026-07-17'
+method: searched
+source: Maven Central + CocoaPods + github.com/appnexus
+packages:
+  - language: java
+    platform: android
+    registry: maven-central
+    name: com.appnexus.opensdk:appnexus-sdk
+    url: https://central.sonatype.com/artifact/com.appnexus.opensdk/appnexus-sdk
+    install: "implementation 'com.appnexus.opensdk:appnexus-sdk:[9,10)'"
+    repo: https://github.com/appnexus/mobile-sdk-android
+    official: true
+    note: AppNexus (Xandr) Android Mobile Advertising SDK. From v9.0 distributed as compiled .aar binaries via Maven Central.
+  - language: swift
+    platform: ios
+    registry: cocoapods
+    name: AppNexusSDK
+    url: https://cocoapods.org/pods/AppNexusSDK
+    install: "pod 'AppNexusSDK'"
+    repo: https://github.com/appnexus/mobile-sdk-ios
+    also_available: [swift-package-manager, carthage, direct-download]
+    official: true
+    note: AppNexus (Xandr) iOS Mobile Advertising SDK. From v9.0 distributed as compiled .xcframework binaries.

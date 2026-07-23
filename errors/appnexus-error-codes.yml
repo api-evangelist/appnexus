@@ -1,0 +1,42 @@
+generated: '2026-07-17'
+method: searched
+source: https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
+docs: https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
+format: custom-envelope
+api: Digital Platform API
+envelope:
+  wrapper: response
+  fields: [error_id, error]
+  note: "error_id is a stable machine token; error is a verbose human-readable description."
+error_codes:
+  - id: INTEGRITY
+    meaning: A client request is inconsistent (e.g. deleting a default creative attached to an active placement).
+    action: Check the request logic for consistency.
+  - id: LIMIT
+    meaning: The user has reached the maximum number of allowed objects of a certain type.
+    action: Delete unnecessary objects to get under the limit, or contact your Xandr representative.
+  - id: NOAUTH
+    meaning: The user is not logged in, or the login credentials are invalid.
+    action: Use the Authentication Service to get a token, or check username/password.
+  - id: NOAUTH_DISABLED
+    meaning: The user's account has been deactivated.
+    action: Log in with a different user, or create a user account specifically for API access.
+  - id: NOAUTH_EXPIRED
+    meaning: The user's password has expired and needs to be reset.
+    action: Use the Authentication Service to get a new token.
+  - id: SYNTAX
+    meaning: The syntax of the request is incorrect.
+    action: Use the error message to identify the issue and fix the code.
+  - id: SYSTEM
+    meaning: A system error has occurred.
+    action: Contact your Xandr representative.
+  - id: UNAUTH
+    meaning: The user is not authorized to take the requested action.
+    action: Check the error message and confirm the logic in your code.
+transport_errors:
+  - status: 429
+    meaning: Too Many Requests - per-minute throttling limit exceeded.
+    action: Wait the number of seconds in the Retry-After response header, then retry.
+  - status: 200
+    meaning: Concurrency limit (15 simultaneous requests) exceeded - returned with an error payload despite 200.
+    action: Reduce concurrent request volume.

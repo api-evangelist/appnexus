@@ -1,0 +1,11 @@
+generated: '2026-07-17'
+method: searched
+source: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
+api: Digital Platform API
+scheme: uri-path-version
+changelog_url: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
+note: >-
+  Xandr (formerly AppNexus, now Microsoft) publishes dated Digital Platform API release
+  notes on Microsoft Learn. Breaking changes are announced there and run in parallel with
+  the prior version for 60 days. This pointer references the live release-notes surface;
+  a dated recent-entries snapshot was not harvested to avoid staleness.

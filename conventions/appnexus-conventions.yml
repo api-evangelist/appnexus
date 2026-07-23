@@ -1,0 +1,62 @@
+generated: '2026-07-17'
+method: searched
+source: https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
+docs:
+  - https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
+  - https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+api: Digital Platform API
+base_url: https://api.appnexus.com
+protocol: "HTTP/1.1 or later; HTTPS only (non-secure HTTP not available)"
+rest:
+  methods: {POST: create, GET: read, PUT: update, DELETE: delete}
+  naming: "service names in URLs are hyphenated (e.g. /insertion-order); JSON fields/values use underscores (e.g. audit_type_direct)"
+authentication:
+  style: token
+  detail: see authentication/appnexus-authentication.yml
+idempotency:
+  supported: false
+  note: No idempotency-key contract documented. PUT semantics are field-merge; arrays overwrite unless append=true.
+pagination:
+  style: offset
+  params: [start_element, num_elements]
+  defaults: {num_elements: 100}
+  max_per_response: 100
+  note: "num_elements defaults to and is capped at 100; requests over 100 objects silently return only the first 100"
+filtering:
+  by_id: "?id=1,2,3 (comma-separated list)"
+  by_field: "?field=value"
+  range_prefixes: [min_, max_, nmin_, nmax_, not_, like_, having_, having_min_, having_max_]
+  field_projection: "?fields=a,b,c limits returned fields"
+  search: "?search=<id-or-name> on services that support it"
+  date_syntax: "YYYY-MM-DD+HH:MM:SS (UTC)"
+  optimization: "?add_mappings=false returns top-level objects only (avoids timeout/memory errors)"
+sorting:
+  param: sort
+  syntax: "?sort=id.desc (field.asc | field.desc)"
+array_updates:
+  default: "PUT overwrites entire array"
+  append: "?append=true adds/updates individual array elements instead of overwriting"
+response_envelope:
+  wrapper: response
+  success_field: "status: OK"
+  fields: [status, count, id, start_element, num_elements, dbg_info]
+  debug: "every response includes dbg_info (Xandr-internal; may be requested during support)"
+  example: '{"response": {"status": "OK", "count": 1, ...}}'
+error_envelope:
+  fields: [error_id, error]
+  note: "error_id is machine-usable; error is a verbose human description. See errors/appnexus-error-codes.yml"
+rate_limiting:
+  throttle_status: 429
+  header: Retry-After
+  detail: "429 Too Many Requests when per-minute limit exceeded; Retry-After = seconds to wait"
+  concurrency_limit: "15 concurrent requests; excess returns HTTP 200 with an error payload"
+  reference: https://learn.microsoft.com/xandr/digital-platform-api/api-usage-constraints
+versioning:
+  style: uri-path
+  current: "https://api.appnexus.com/ or /current/"
+  pinned: "https://api.appnexus.com/v1.16/ (versioned path for breaking-change features)"
+  detail: see lifecycle/appnexus-lifecycle.yml
+cross_links:
+  errors: errors/appnexus-error-codes.yml
+  lifecycle: lifecycle/appnexus-lifecycle.yml
+  authentication: authentication/appnexus-authentication.yml

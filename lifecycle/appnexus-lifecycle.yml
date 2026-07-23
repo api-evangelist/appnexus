@@ -1,0 +1,21 @@
+generated: '2026-07-17'
+method: searched
+source: https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+api: Digital Platform API
+versioning:
+  scheme: uri-path
+  current: "https://api.appnexus.com/ (also /current/)"
+  pinned_example: "https://api.appnexus.com/v1.16/"
+  docs: https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+deprecation:
+  policy: "When a breaking change is introduced, two API versions run in production in parallel for 60 days - one with and one without the change. The breaking change lands in the newer versioned path."
+  policy_url: https://learn.microsoft.com/xandr/digital-platform-api/breaking-changes
+  announced_in: API Release Notes
+release_notes:
+  url: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
+object_limits:
+  service: Object Limit Service
+  note: "Members are capped on number of objects (incl. inactive/unused); monitor via the Object Limit Service."
+notes:
+  - "Integration must tolerate additional response fields added over time (forward-compatibility expected)."
+  - "Mobile SDKs (Android/iOS) moved to binary-only distribution from v9.0; source repos no longer updated."

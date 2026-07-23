@@ -1,8 +1,26 @@
 aid: appnexus
 name: AppNexus
-description: 'AppNexus is a company surfaced as a portfolio company of first-round-capital and added to
-  the API Evangelist network as a stub for enrichment. Sector: adtech. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  AppNexus was a New York-based programmatic advertising technology company that ran one of the
+  largest independent real-time online ad exchanges alongside a cloud-based buy-side and sell-side
+  platform for advertisers, agencies, and publishers. AT&T acquired AppNexus in 2018 and rebranded
+  it Xandr; it is now part of Microsoft. Its developer surface lives on as the Xandr Digital Platform
+  API (host api.appnexus.com) - a RESTful JSON API for campaign, creative, inventory, deal, and
+  reporting operations - plus the first-party AppNexus mobile advertising SDKs for Android and iOS.
+  This profile was enriched by the API Evangelist pipeline from the public developer documentation.
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://raw.githubusercontent.com/api-evangelist/appnexus/refs/heads/main/apis.yml
 url: https://raw.githubusercontent.com/api-evangelist/appnexus/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,13 +28,41 @@ x-backed-by:
 - first-round-capital
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-successor: xandr
 specificationVersion: '0.20'
 created: '2026-07-17'
 modified: '2026-07-17'
 tags:
 - Company
 - Adtech
-apis: []
+- Advertising
+- Programmatic
+- Ad Exchange
+- DSP
+- SSP
+- Mobile SDK
+- Marketing
+apis:
+- name: Digital Platform API
+  description: >-
+    RESTful JSON API for the AppNexus/Xandr programmatic advertising platform - manage advertisers,
+    campaigns, line items, creatives, placements, inventory, deals, and pull reporting. Token
+    authentication, offset pagination (start_element/num_elements), and a response/error envelope.
+  humanURL: https://learn.microsoft.com/xandr/digital-platform-api/
+  baseURL: https://api.appnexus.com
+  tags:
+  - Advertising
+  - Programmatic
+  - Adtech
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/xandr/digital-platform-api/
+  - type: APIReference
+    url: https://learn.microsoft.com/xandr/digital-platform-api/api-services
+  - type: Authentication
+    url: authentication/appnexus-authentication.yml
+  - type: Conventions
+    url: conventions/appnexus-conventions.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,3 +71,44 @@ maintainers:
 common:
 - type: Website
   url: https://www.appnexus.com
+- type: DeveloperPortal
+  url: https://learn.microsoft.com/xandr/digital-platform-api/
+- type: Documentation
+  url: https://learn.microsoft.com/xandr/digital-platform-api/
+- type: APIReference
+  url: https://learn.microsoft.com/xandr/digital-platform-api/api-services
+- type: GettingStarted
+  url: https://learn.microsoft.com/xandr/digital-platform-api/api-onboarding-process
+- type: GitHubOrganization
+  url: https://github.com/appnexus
+- type: Authentication
+  url: authentication/appnexus-authentication.yml
+- type: Conventions
+  url: conventions/appnexus-conventions.yml
+- type: ErrorCatalog
+  url: errors/appnexus-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/appnexus-lifecycle.yml
+- type: Deprecation
+  url: https://learn.microsoft.com/xandr/digital-platform-api/breaking-changes
+- type: ChangeLog
+  url: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
+- type: Sandbox
+  url: sandbox/appnexus-sandbox.yml
+- type: Packages
+  url: packages/appnexus-packages.yml
+- type: SDKs
+  name: AppNexus Android Mobile SDK
+  url: packages/appnexus-packages.yml
+- type: SDKs
+  name: AppNexus iOS Mobile SDK
+  url: packages/appnexus-packages.yml
+- type: DomainSecurity
+  url: security/appnexus-domain-security.yml
+- type: LLMsTxt
+  url: llms/appnexus-llms.txt
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
