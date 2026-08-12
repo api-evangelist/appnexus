@@ -1,0 +1,121 @@
+generated: '2026-08-12'
+method: probed
+source: live HTTP probes of every apis.yml baseURL host and the documentation host
+note: >-
+  No /.well-known/ document is served on any AppNexus/Xandr host. The API host
+  api.appnexus.com answers a hard 404 for every path probed. The brand websites
+  www.appnexus.com and www.xandr.com no longer exist as sites - both 301 to
+  https://about.ads.microsoft.com/en, whose SPA catch-all answers HTTP 200 with the
+  same 189KB HTML shell for EVERY path, including /.well-known/*. Those 200s are the
+  documented soft-404 false positive, not documents, so they are recorded as misses
+  and NO WellKnown / SecurityTxt / AgentCard pointer is emitted.
+hosts:
+- host: https://api.appnexus.com
+  role: api-base
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /swagger.json
+    status: 404
+- host: https://api-test.appnexus.com
+  role: host-seen-in-a-docs-curl-trace
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://www.appnexus.com
+  role: legacy-brand-site
+  redirects_to: https://about.ads.microsoft.com/en
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+  - path: /.well-known/agent-card.json
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+  - path: /.well-known/agent.json
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+  - path: /llms.txt
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+- host: https://www.xandr.com
+  role: successor-brand-site
+  redirects_to: https://about.ads.microsoft.com/en
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+  - path: /.well-known/openid-configuration
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+  - path: /.well-known/agent-card.json
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+  - path: /.well-known/agent.json
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+  - path: /llms.txt
+    status: 301
+    resolved_status: 200
+    verdict: miss
+    reason: html-spa-catch-all
+result:
+  well_known_documents_found: 0
+  security_txt: false
+  agent_card: false
+  pointer_emitted: false
+related:
+  microsoft_corporate_security_txt: https://www.microsoft.com/.well-known/security.txt
+  microsoft_corporate_security_txt_status: 200
+  microsoft_corporate_note: >-
+    Microsoft serves a corporate security.txt at microsoft.com, but that is the parent
+    company's document on a different host and is NOT served by any AppNexus/Xandr host,
+    so it is recorded here as context only and is not credited to this profile as a
+    well-known surface. It IS cited in security/appnexus-vulnerability-disclosure.yml,
+    where the correct claim is "the parent company runs the disclosure program".

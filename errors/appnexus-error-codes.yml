@@ -1,7 +1,9 @@
-generated: '2026-07-17'
+generated: '2026-08-12'
 method: searched
-source: https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
-docs: https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-semantics
+docs:
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-semantics
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
 format: custom-envelope
 api: Digital Platform API
 envelope:
@@ -35,8 +37,31 @@ error_codes:
     action: Check the error message and confirm the logic in your code.
 transport_errors:
   - status: 429
-    meaning: Too Many Requests - per-minute throttling limit exceeded.
-    action: Wait the number of seconds in the Retry-After response header, then retry.
-  - status: 200
-    meaning: Concurrency limit (15 simultaneous requests) exceeded - returned with an error payload despite 200.
-    action: Reduce concurrent request volume.
+    meaning: Too Many Requests - the USER-level rate limit was exceeded.
+    headers: [x-ratelimit-code, retry-after, x-ratelimit-count, x-an-user-id]
+    action: Sleep for the number of seconds in Retry-After, then retry.
+    source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
+  - status: 503
+    meaning: >-
+      Service Unavailable - the SERVICE-level rate limit was exceeded ("the service is
+      overwhelmed by requests and is limiting new ones").
+    headers: [x-ratelimit-code, retry-after]
+    action: >-
+      Check for x-ratelimit-code. If present the 503 is throttling, not an outage - sleep
+      Retry-After seconds and retry. If absent, treat it as a genuine service failure.
+    source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
+agent_notes:
+  - >-
+    The HTTP status alone is not sufficient to classify a failure. A domain error (SYNTAX,
+    INTEGRITY, LIMIT, UNAUTH) arrives inside the response envelope, so an automated client
+    must parse response.error_id on every call rather than branching on status code.
+  - >-
+    NOAUTH is the re-authentication trigger. Do not pre-emptively re-auth: the API allows
+    only 10 successful authentications per 5-minute window.
+  - >-
+    Every response carries dbg_info, including dbg_info.version (the running build) and any
+    warnings[] - the only per-call diagnostic channel, and what support will ask for.
+cross_links:
+  rate_limits: rate-limits/appnexus-rate-limits.yml
+  conventions: conventions/appnexus-conventions.yml
+  authentication: authentication/appnexus-authentication.yml

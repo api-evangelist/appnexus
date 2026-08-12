@@ -1,12 +1,21 @@
-generated: '2026-07-17'
+generated: '2026-08-12'
 method: searched
-source: https://learn.microsoft.com/xandr/digital-platform-api/authentication-service
-docs: https://learn.microsoft.com/xandr/digital-platform-api/authentication-service
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/authentication-service
+docs:
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/authentication-service
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/token-based-api-authentication
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
 summary:
   types: [token]
   scheme: custom-token
   oauth2: false
+  oidc: false
+  jwt: true
   api_key_in: [header, cookie]
+  scopes: false
+  scopes_note: >-
+    There is no OAuth scope surface. Authorization is role-based inside the platform - see
+    the Working with Roles using the API guide - and is not expressed in the credential.
 schemes:
   - name: token
     type: token
@@ -16,6 +25,41 @@ schemes:
       - "Authorization: <TOKEN> request header"
       - "session cookie (curl -b cookies -c cookies)"
     token_lifetime: "2 hours idle; 24-hour hard expiry regardless of activity"
-    reauth_limit: "10 successful auths per 5-minute period"
-    jwt_option: https://learn.microsoft.com/xandr/digital-platform-api/token-based-api-authentication
-    error_signal: "error_id NOAUTH in response envelope signals re-authentication needed"
+    reauth_limit: "10 successful authentications per 5-minute period"
+    reauth_limit_source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
+    error_signal: "error_id NOAUTH in the response envelope signals re-authentication needed"
+  - name: jwt
+    type: token
+    mechanism: signed-token
+    detail: >-
+      "For the Digital Platform API, we've implemented a signed token-based authentication
+      system. This system uses JSON Web Tokens (JWT) to help ensure your sessions are as
+      secure as possible."
+    docs: https://learn.microsoft.com/en-us/xandr/digital-platform-api/token-based-api-authentication
+account_recovery:
+  service: Account Recovery Service
+  docs: https://learn.microsoft.com/en-us/xandr/digital-platform-api/account-recovery-service
+auth_errors:
+  - id: NOAUTH
+    meaning: not logged in, or credentials invalid
+  - id: NOAUTH_DISABLED
+    meaning: account deactivated
+  - id: NOAUTH_EXPIRED
+    meaning: password expired and needs reset
+  - id: UNAUTH
+    meaning: authenticated but not authorized for the requested action
+discovery:
+  well_known_openid_configuration: 404
+  well_known_oauth_authorization_server: 404
+  note: >-
+    No discovery document is served on api.appnexus.com; a client must be told the /auth
+    endpoint out of band. See well-known/appnexus-well-known.yml.
+access_gate:
+  self_serve: false
+  note: >-
+    Credentials are issued only to existing Xandr/Microsoft Monetize customers through the
+    API Onboarding Process. See sandbox/appnexus-sandbox.yml.
+cross_links:
+  conventions: conventions/appnexus-conventions.yml
+  errors: errors/appnexus-error-codes.yml
+  conformance: conformance/appnexus-conformance.yml

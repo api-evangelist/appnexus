@@ -1,21 +1,144 @@
-generated: '2026-07-17'
+generated: '2026-08-12'
 method: searched
-source: https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/breaking-changes
+docs:
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/breaking-changes
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-best-practices
+- https://learn.microsoft.com/en-us/xandr/monetize/release-notes
 api: Digital Platform API
+company_lifecycle:
+  status: acquired-and-partially-retired
+  chain: AppNexus (2007) -> AT&T acquisition 2018, rebranded Xandr -> Microsoft acquisition 2022
+    -> productized as Microsoft Monetize (sell-side) and Microsoft Invest (buy-side)
+  brand_sites_retired: true
+  brand_site_evidence:
+  - url: https://www.appnexus.com
+    status: 301
+    redirects_to: https://www.xandr.com/
+  - url: https://www.xandr.com/
+    status: 301
+    redirects_to: https://about.ads.microsoft.com/en
+  - url: https://docs.xandr.com/
+    status: 0
+    note: connection failure - the former Xandr documentation host no longer resolves; all
+      documentation moved to learn.microsoft.com/xandr
+  buy_side_retirement:
+    product: Microsoft Invest (formerly Xandr Invest, formerly the AppNexus DSP)
+    effective: '2026-02-28'
+    finding: >-
+      Microsoft announced it is discontinuing its demand-side platform, stating it is
+      "exclusively focusing our buy-side advertising technology investments on the Microsoft
+      Advertising Platform" from 2026. The buy-side services of the Digital Platform API
+      (advertiser, insertion order, line item, campaign, creative, profile) were built for
+      that DSP. The invest/release-notes surface has not carried a new entry since
+      2025-09-23, while monetize/release-notes is still shipping monthly - the divergence
+      is visible in the provider's own changelog.
+    source: https://learn.microsoft.com/en-us/xandr/invest/release-notes
+    caveat: >-
+      Microsoft has not published a Digital Platform API sunset date. The API host is live
+      (api.appnexus.com/auth answers HTTP 400 to an empty POST) and the reference docs were
+      last revised 2025-10-22, with the breaking-changes policy page revised 2026-01-27.
+  sell_side_status:
+    product: Microsoft Monetize (sell-side / SSP, formerly Xandr Monetize)
+    active: true
+    evidence: monetize/release-notes carries dated entries through 2026-04-01
 versioning:
   scheme: uri-path
-  current: "https://api.appnexus.com/ (also /current/)"
-  pinned_example: "https://api.appnexus.com/v1.16/"
-  docs: https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+  current: https://api.appnexus.com/ (also /current/)
+  pinned_example: https://api.appnexus.com/v1.16/
+  reported_version_field: >-
+    Every response carries dbg_info.version, e.g. "1.18.349" in the documented example -
+    the running build, not the URI version.
+  docs: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-best-practices
 deprecation:
-  policy: "When a breaking change is introduced, two API versions run in production in parallel for 60 days - one with and one without the change. The breaking change lands in the newer versioned path."
-  policy_url: https://learn.microsoft.com/xandr/digital-platform-api/breaking-changes
-  announced_in: API Release Notes
+  policy: >-
+    "When we introduce a breaking change into our API, we will support two versions of the
+    API in production, one with and one without the breaking change, for 60 days. Also, we
+    will notify API users of these changes and how to correctly reach each version during
+    the breaking changes period. If your user account is enabled for the API, you will
+    receive breaking change communications automatically."
+  policy_url: https://learn.microsoft.com/en-us/xandr/digital-platform-api/breaking-changes
+  policy_last_updated: '2026-01-27'
+  notification_channel: direct email to API-enabled user accounts (not a public feed)
+  sunset_header: false
+  sunset_header_note: >-
+    No RFC 8594 Sunset or Deprecation response header is documented. Deprecation is
+    announced by email and by parallel versioned URLs, so an automated client cannot
+    detect an impending breaking change from the wire.
+  qualifies_as_breaking:
+  - removal of a field
+  - change of a field from non-mandatory to mandatory
+  - addition of new validation rules
+  - modification of the data type of a field
+  - modification of throttling of requests
+  - reduction in the number of objects returned by responses
+  explicitly_not_breaking:
+  - addition of a new non-mandatory field
+  - addition of a new service
+  - addition of metrics/dimensions to reports
+  - addition of a new report type
+  - deprecation of a field without removing it
+  - reduction or increase in the number of concurrent reports allowed
+  - appending a new field to a log-level data feed
+  - change in order of fields in an object or array
+  reserved_rights: >-
+    "We reserve the right to fix bugs, adjust functionality to comply with our Part of
+    Service Policies and legal obligations, and change features and products in alpha and
+    beta without providing early notice."
+  forward_compatibility_requirement: >-
+    Integrations must tolerate additional response fields being added over time.
+deprecated_surfaces:
+- item: rate-limit response headers
+  headers: [x-count-read, x-count-write, x-rate-limits, x-ratelimit-read, x-ratelimit-write,
+    x-ratelimit-system]
+  state: deprecated, will be removed
+  replacement: x-ratelimit-code, x-ratelimit-count, x-an-user-id, Retry-After
+  source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
+- item: inventory sources targeted per profile (object limit)
+  state: deprecated
+- item: public Prebid Cache in Microsoft Monetize
+  state: deprecation announced 2025-04-30, restated 2025-12-12
+  source: https://learn.microsoft.com/en-us/xandr/monetize/release-notes
+- item: open-source distribution of the mobile SDKs
+  state: >-
+    ended at v9.0 - "This is not a deprecation of our SDK, only an open-source deprecation
+    as we are taking our Android and iOS Mobile SDKs private." Binaries only from v9.0.
+  source: https://github.com/appnexus/mobile-sdk-android
 release_notes:
-  url: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
+  digital_platform_api:
+    url: null
+    note: >-
+      DEAD LINK CORRECTED. The previously recorded DPA release-notes URL
+      learn.microsoft.com/xandr/digital-platform-api/api-release-notes now returns HTTP 404
+      and no replacement DPA-specific release-notes page exists in the section's toc.json.
+      API changes surface through the product release notes below and through direct email.
+  monetize: https://learn.microsoft.com/en-us/xandr/monetize/release-notes
+  invest: https://learn.microsoft.com/en-us/xandr/invest/release-notes
+  mobile_sdk_android: https://learn.microsoft.com/en-us/xandr/mobile-sdk/android-sdk-release-notes
+  mobile_sdk_ios: https://learn.microsoft.com/en-us/xandr/mobile-sdk/ios-sdk-release-notes
+status_page:
+  url: https://status.xandr.com
+  status: 200
+  platform: Atlassian Statuspage
+  page_id: z7jb4dcjs0nl
+  machine_readable: https://status.xandr.com/api/v2/summary.json
+  components_published: 0
+  note: >-
+    Live and current - the summary API was serving an updated_at of 2026-08-12 and an open
+    scheduled maintenance entry when probed. The page publishes incidents and scheduled
+    maintenance but declares NO components, so there is no per-service (API vs exchange vs
+    console) health signal to subscribe to. status.appnexus.com redirects here.
+sla:
+  published: false
+  note: >-
+    No public SLA. Terms are contract-bound: "The Xandr Service Policies, Privacy
+    Regulations, Platform Terms of Service and Online Terms are confidential and tied to
+    specific contracts between Xandr and its customers."
+  source: https://learn.microsoft.com/en-us/xandr/policies-regulations/
 object_limits:
   service: Object Limit Service
-  note: "Members are capped on number of objects (incl. inactive/unused); monitor via the Object Limit Service."
-notes:
-  - "Integration must tolerate additional response fields added over time (forward-compatibility expected)."
-  - "Mobile SDKs (Android/iOS) moved to binary-only distribution from v9.0; source repos no longer updated."
+  note: Members are capped on object counts; see rate-limits/appnexus-rate-limits.yml.
+cross_links:
+  changelog: changelog/appnexus-changelog.yml
+  rate_limits: rate-limits/appnexus-rate-limits.yml
+  packages: packages/appnexus-packages.yml

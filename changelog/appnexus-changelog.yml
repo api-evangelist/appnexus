@@ -1,11 +1,127 @@
-generated: '2026-07-17'
+generated: '2026-08-12'
 method: searched
-source: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
+source: https://learn.microsoft.com/en-us/xandr/monetize/release-notes
 api: Digital Platform API
 scheme: uri-path-version
-changelog_url: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
-note: >-
-  Xandr (formerly AppNexus, now Microsoft) publishes dated Digital Platform API release
-  notes on Microsoft Learn. Breaking changes are announced there and run in parallel with
-  the prior version for 60 days. This pointer references the live release-notes surface;
-  a dated recent-entries snapshot was not harvested to avoid staleness.
+changelog_url: https://learn.microsoft.com/en-us/xandr/monetize/release-notes
+correction: >-
+  The URL previously recorded here,
+  learn.microsoft.com/xandr/digital-platform-api/api-release-notes, now returns HTTP 404
+  and the Digital Platform API section's toc.json contains no release-notes page at all.
+  There is no API-specific changelog any more. The surfaces below are what Xandr actually
+  publishes today; API-affecting changes appear inside the product release notes, and
+  breaking changes are communicated by direct email to API-enabled accounts rather than
+  published.
+surfaces:
+- name: Microsoft Monetize release notes
+  url: https://learn.microsoft.com/en-us/xandr/monetize/release-notes
+  status: 200
+  cadence: roughly monthly
+  latest_entry: '2026-04-01'
+  active: true
+- name: Microsoft Invest release notes
+  url: https://learn.microsoft.com/en-us/xandr/invest/release-notes
+  status: 200
+  cadence: dormant
+  latest_entry: '2025-09-23'
+  active: false
+  note: >-
+    No entry in eleven months, consistent with the announced discontinuation of the
+    Microsoft Invest DSP effective 2026-02-28. See lifecycle/appnexus-lifecycle.yml.
+- name: Android SDK release notes
+  url: https://learn.microsoft.com/en-us/xandr/mobile-sdk/android-sdk-release-notes
+  status: 200
+  latest_entry: '2026-06-10'
+  latest_version: 9.13.0
+  active: true
+- name: iOS SDK release notes
+  url: https://learn.microsoft.com/en-us/xandr/mobile-sdk/ios-sdk-release-notes
+  status: 200
+  latest_entry: '2026-06-10'
+  latest_version: 9.13.0
+  active: true
+- name: Breaking changes policy
+  url: https://learn.microsoft.com/en-us/xandr/digital-platform-api/breaking-changes
+  status: 200
+  page_last_updated: '2026-01-27'
+  note: policy page, not a dated log of changes
+feed:
+  rss: false
+  atom: false
+  note: >-
+    No machine-readable changelog feed is published on any surface. Each release note is a
+    separate Microsoft Learn page linked from an index page.
+entries:
+- date: '2026-04-01'
+  product: Monetize
+  title: Inventory Manager UI modernization now generally available
+  breaking: false
+- date: '2026-03-24'
+  product: Monetize
+  title: Historical Reporting adds new supply chain and GPID fields
+  breaking: false
+  api_relevant: true
+  note: additive reporting fields - explicitly a non-breaking change under the policy
+- date: '2026-03-09'
+  product: Monetize
+  title: Seller Monitoring Workflow (SMW) UI modernization now generally available
+  breaking: false
+- date: '2026-01-21'
+  product: Monetize
+  title: DV360 Central Partner ID Support for Multi-Buyer Deals
+  breaking: false
+  api_relevant: true
+- date: '2026-01-14'
+  product: Monetize
+  title: Deal Sync Status available in the new Deal screen
+  breaking: false
+- date: '2026-01-12'
+  product: Monetize
+  title: Seller Monitoring Workflow (SMW) UI Modernization (Fluent UI)
+  breaking: false
+- date: '2026-01-06'
+  product: Monetize
+  title: 'Ad Quality: Enhanced bidder blocks (Limited Beta)'
+  breaking: false
+- date: '2025-12-12'
+  product: Monetize
+  title: Upcoming deprecation of public Prebid Cache
+  breaking: true
+  note: deprecation announcement
+- date: '2025-11-12'
+  product: Monetize
+  title: New Deals Screen in Microsoft Monetize
+  breaking: false
+- date: '2025-10-22'
+  product: Monetize
+  title: Automated Deal Archival
+  breaking: false
+  api_relevant: true
+- date: '2025-09-23'
+  product: Monetize + Invest
+  title: Unified Sign-In with Microsoft account
+  breaking: false
+  note: last entry published on the Invest surface
+- date: '2026-06-10'
+  product: Mobile SDK (Android + iOS)
+  version: 9.13.0
+  title: Video click behavior now pauses/resumes playback; OMID 1.6.5; video player fixes
+  breaking: false
+- date: '2026-03-18'
+  product: Mobile SDK (Android + iOS)
+  version: 9.12.0
+  title: Video control bar always visible; Facebook Audience Network dependency to 6.21.0
+  breaking: false
+- date: '2026-03-02'
+  product: Mobile SDK (Android)
+  version: 9.11.1
+  title: Roll back OMSDK to v1.4.9 to fix R8 minification issue
+  breaking: false
+- date: '2026-02-17'
+  product: Mobile SDK (Android)
+  version: 9.11.0
+  title: 'ANAdResponseInfo gains isSov(), getMediaSubtypeId(), getMediaTypeId()'
+  breaking: false
+cross_links:
+  lifecycle: lifecycle/appnexus-lifecycle.yml
+  packages: packages/appnexus-packages.yml

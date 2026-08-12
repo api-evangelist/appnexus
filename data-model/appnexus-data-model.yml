@@ -1,0 +1,220 @@
+generated: '2026-08-12'
+method: searched
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/network-relationship-diagram
+docs:
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/network-relationship-diagram
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/reference
+api: Digital Platform API
+base_url: https://api.appnexus.com
+derivation_note: >-
+  There is no OpenAPI for this API, so this graph was NOT derived from $ref links. Every
+  entity and every relationship below was read off the published service reference pages
+  on Microsoft Learn - the JSON field tables (which name the *_id reference fields) and
+  the documented endpoint filters (e.g. GET /campaign?advertiser_id=). Nothing here is
+  inferred from naming alone. The canonical picture, the Network Relationship Diagram, is
+  published only as a PNG, so the machine-readable version is this file.
+identity:
+  root: member
+  note: >-
+    member is the tenant/account root. Almost every buy-side and sell-side object carries
+    member_id and is scoped to it; object limits (see rate-limits/) are enforced per member.
+  id_style: integer surrogate keys named <object>_id; most services also accept an
+    optional customer-assigned "code" as an alternate key (e.g. GET /campaign?code=).
+entities:
+- name: member
+  service: Member Service
+  path: /member
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/member-service
+  reference_fields: [bidder_id, brand_id, country_id, default_ad_profile_id, default_buyer_group_id,
+    default_placement_id, developer_id, pitbull_segment_id, seller_id, seller_member_id,
+    visibility_profile_id]
+- name: advertiser
+  service: Advertiser Service
+  path: /advertiser
+  side: buy
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/advertiser-service
+  reference_fields: [member_id, category_id, default_brand_id, profile_id, remarketing_segment_id]
+- name: insertion_order
+  service: Insertion Order Service
+  path: /insertion-order
+  side: buy
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/insertion-order-service
+  reference_fields: [advertiser_id, member_id, broker_id, profile_id]
+- name: line_item
+  service: Line Item Service (also ALI and GDALI variants)
+  path: /line-item
+  side: buy
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/line-item-service
+  reference_fields: [advertiser_id, insertion_order_id, member_id, broker_id, profile_id]
+- name: campaign
+  service: Campaign Service
+  path: /campaign
+  side: buy
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/campaign-service
+  reference_fields: [advertiser_id, line_item_id, profile_id, broker_id]
+- name: creative
+  service: Creative Service
+  path: /creative
+  side: buy
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/creative-service
+  reference_fields: [advertiser_id, member_id, publisher_id, brand_id, campaign_id,
+    creative_format_id, media_subtype_id, pixel_template_id, segment_id, template_id]
+- name: profile
+  service: Profile Service
+  path: /profile
+  side: shared
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/profile-service
+  reference_fields: [advertiser_id, member_id, publisher_id, bidder_id, seller_member_id,
+    third_party_auditor_id]
+  note: >-
+    The targeting object. Documented as the one entity the UI hides: "campaigns are created
+    through a combination of a profile object, which includes targeting information, and a
+    campaign object, which includes start and end dates, budget, and associated creatives."
+- name: segment
+  service: Segment Service
+  path: /segment
+  side: shared
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/segment-service
+  reference_fields: [advertiser_id, member_id, parent_segment_id, provider_id]
+- name: publisher
+  service: Publisher Service
+  path: /publisher
+  side: sell
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/publisher-service
+  reference_fields: [member_id, brand_id, base_ad_quality_rule_id, base_payment_rule_id,
+    default_ad_profile_id, default_placement_id, default_site_id, visibility_profile_id,
+    ym_profile_id]
+- name: site
+  service: Site Service
+  path: /site
+  side: sell
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/site-service
+  reference_fields: [publisher_id, member_id, primary_content_category_id,
+    inventory_attribute_id, mobile_app_instance_id, os_family_id, bundle_id, media_buy_id]
+- name: placement
+  service: Placement Service
+  path: /placement
+  side: sell
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/placement-service
+  reference_fields: [publisher_id, site_id, ad_profile_id, ad_type_id, default_creative_id,
+    inventory_source_id, media_type_group_id, renderer_id, visibility_profile_id]
+- name: payment_rule
+  service: Payment Rule Service
+  path: /payment-rule
+  side: sell
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/payment-rule-service
+  reference_fields: [publisher_id, profile_id, publisher_rule_id]
+- name: deal
+  service: Deal Service
+  path: /deal
+  side: sell
+  doc: https://learn.microsoft.com/en-us/xandr/digital-platform-api/deal-service
+  reference_fields: [seller_member_id, bidder_id, profile_id, package_id,
+    media_type_group_id, mediatype_id, visibility_profile_id]
+relationships:
+- from: member
+  to: advertiser
+  type: has_many
+  via: advertiser.member_id
+- from: member
+  to: publisher
+  type: has_many
+  via: publisher.member_id
+- from: advertiser
+  to: insertion_order
+  type: has_many
+  via: insertion_order.advertiser_id
+- from: insertion_order
+  to: line_item
+  type: has_many
+  via: line_item.insertion_order_id
+- from: advertiser
+  to: line_item
+  type: has_many
+  via: line_item.advertiser_id
+- from: line_item
+  to: campaign
+  type: has_many
+  via: campaign.line_item_id
+  evidence: 'GET https://api.appnexus.com/campaign?advertiser_id= and the campaign object''s
+    line_item_id field'
+- from: advertiser
+  to: campaign
+  type: has_many
+  via: campaign.advertiser_id
+- from: advertiser
+  to: creative
+  type: has_many
+  via: creative.advertiser_id
+- from: campaign
+  to: profile
+  type: has_one
+  via: campaign.profile_id
+- from: line_item
+  to: profile
+  type: has_one
+  via: line_item.profile_id
+- from: advertiser
+  to: profile
+  type: has_many
+  via: profile.advertiser_id
+- from: advertiser
+  to: segment
+  type: has_many
+  via: segment.advertiser_id
+- from: segment
+  to: segment
+  type: belongs_to
+  via: segment.parent_segment_id
+  note: segments nest
+- from: publisher
+  to: site
+  type: has_many
+  via: site.publisher_id
+  evidence: GET https://api.appnexus.com/placement?publisher_id= and site.publisher_id
+- from: site
+  to: placement
+  type: has_many
+  via: placement.site_id
+  evidence: GET https://api.appnexus.com/placement?site_id=
+- from: publisher
+  to: placement
+  type: has_many
+  via: placement.publisher_id
+- from: publisher
+  to: payment_rule
+  type: has_many
+  via: payment_rule.publisher_id
+- from: placement
+  to: creative
+  type: has_one
+  via: placement.default_creative_id
+  note: the default creative served when no other ad wins
+- from: placement
+  to: visibility_profile
+  type: has_one
+  via: placement.visibility_profile_id
+- from: deal
+  to: member
+  type: belongs_to
+  via: deal.seller_member_id
+- from: deal
+  to: profile
+  type: has_one
+  via: deal.profile_id
+read_only_lookup_domains:
+  note: >-
+    ~45 read-only services back the *_id foreign keys above with platform-wide enumerations
+    rather than tenant data. They are the value domains for targeting and classification.
+  services: [Ad Server Service, Brand Service, Brand Company Service, Browser Service,
+    Carrier Service, Category Service, City Service, Country Service, Creative Format Service,
+    Currency Service, Delivery Type Service, Designated Market Area Service, Device Make Service,
+    Device Model Service, Duration Service, Genre Service, Inventory Attribute Service,
+    Label Service, Language Service, Lookup Service, Media Subtype Service, Media Type Service,
+    Mobile App Service, Mobile App Instance Service, Network Service, Object Limit Service,
+    Operating System Service, Operating System Family Service, Operating System Extended Service,
+    Political District Service, Postal Code Service, Program Type Service, Rating Service,
+    Region Service, Search Service, Technical Attribute Service]
+cross_links:
+  conventions: conventions/appnexus-conventions.yml
+  errors: errors/appnexus-error-codes.yml

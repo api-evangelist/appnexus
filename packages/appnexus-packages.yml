@@ -1,23 +1,170 @@
-generated: '2026-07-17'
+generated: '2026-08-12'
 method: searched
-source: Maven Central + CocoaPods + github.com/appnexus
+source: >-
+  Maven Central (repo1.maven.org maven-metadata.xml), CocoaPods trunk API, registry.npmjs.org,
+  pypi.org, github.com/appnexus
+note: >-
+  Two distinct client-library families. The MOBILE ADVERTISING SDKs (Android/iOS) are the
+  live, actively shipped ones - v9.13.0 landed on 2026-06-10 on both platforms - but they
+  wrap the ad-serving runtime, not the Digital Platform API. The only maintained client
+  for the Digital Platform API itself is anx-api on npm. Versions and dates below were
+  read from each registry's own metadata endpoint on 2026-08-12.
 packages:
-  - language: java
-    platform: android
-    registry: maven-central
-    name: com.appnexus.opensdk:appnexus-sdk
-    url: https://central.sonatype.com/artifact/com.appnexus.opensdk/appnexus-sdk
-    install: "implementation 'com.appnexus.opensdk:appnexus-sdk:[9,10)'"
-    repo: https://github.com/appnexus/mobile-sdk-android
-    official: true
-    note: AppNexus (Xandr) Android Mobile Advertising SDK. From v9.0 distributed as compiled .aar binaries via Maven Central.
-  - language: swift
-    platform: ios
-    registry: cocoapods
-    name: AppNexusSDK
-    url: https://cocoapods.org/pods/AppNexusSDK
-    install: "pod 'AppNexusSDK'"
-    repo: https://github.com/appnexus/mobile-sdk-ios
-    also_available: [swift-package-manager, carthage, direct-download]
-    official: true
-    note: AppNexus (Xandr) iOS Mobile Advertising SDK. From v9.0 distributed as compiled .xcframework binaries.
+- language: javascript
+  registry: npm
+  name: anx-api
+  url: https://www.npmjs.com/package/anx-api
+  install: npm install anx-api --save
+  repo: https://github.com/appnexus/anx-api
+  version: 8.2.1
+  published: '2025-11-10'
+  official: true
+  wraps: Digital Platform API
+  note: >-
+    "AppNexus Api Wrapper" - the first-party JavaScript/TypeScript client for
+    api.appnexus.com. Handles the session-token login, rate limiting and a configurable
+    concurrency limit. The only Digital Platform API client library still receiving
+    releases.
+- language: java
+  platform: android
+  registry: maven-central
+  name: com.appnexus.opensdk:appnexus-sdk
+  url: https://central.sonatype.com/artifact/com.appnexus.opensdk/appnexus-sdk
+  install: "implementation 'com.appnexus.opensdk:appnexus-sdk:9.13.0'"
+  repo: https://github.com/appnexus/mobile-sdk-android
+  version: 9.13.0
+  published: '2026-06-10'
+  official: true
+  wraps: Mobile ad serving runtime
+  note: >-
+    AppNexus (Xandr) Android Mobile Advertising SDK. Source is no longer published: "We no
+    longer release source code updates of Android SDK to Github... Future updates starting
+    from SDK v9.0 will be released only as compiled .aar binary file." The GitHub repo's
+    last release tag is 8.11 (2024-02-15) - binaries on Maven Central are the real
+    distribution and are current.
+- language: java
+  platform: android
+  registry: maven-central
+  name: com.appnexus.opensdk:appnexus-instreamvideo
+  url: https://central.sonatype.com/artifact/com.appnexus.opensdk/appnexus-instreamvideo
+  install: "implementation 'com.appnexus.opensdk:appnexus-instreamvideo:9.13.0-1.66'"
+  version: 9.13.0-1.66
+  published: '2026-06-10'
+  official: true
+  note: Instream video companion artifact, versioned in lockstep with appnexus-sdk.
+- language: objective-c
+  platform: ios
+  registry: cocoapods
+  name: AppNexusSDK
+  url: https://cocoapods.org/pods/AppNexusSDK
+  install: "pod 'AppNexusSDK'"
+  repo: https://github.com/appnexus/mobile-sdk-ios
+  version: 9.9.1
+  published: '2025-11-13'
+  official: true
+  wraps: Mobile ad serving runtime
+  note: >-
+    138 published versions. CURRENCY GAP: the CocoaPods trunk latest is 9.9.1 (2025-11-13)
+    while Xandr's own iOS release notes and the Swift Package Manager distribution are both
+    at 9.13.0 (2026-06-10). CocoaPods consumers are four minor versions behind the
+    documented release.
+- language: swift
+  platform: ios
+  registry: swift-package-manager
+  name: appnexus/mobile-sdk-ios-spm
+  url: https://github.com/appnexus/mobile-sdk-ios-spm
+  install: "https://github.com/appnexus/mobile-sdk-ios-spm (SPM package URL)"
+  version: 9.13.0
+  published: '2026-06-10'
+  official: true
+  note: >-
+    Swift Package Manager distribution of the compiled .xcframework. Version read from the
+    repository's release tag; SPM has no central registry metadata endpoint. This is the
+    most current iOS distribution channel.
+- language: swift
+  platform: ios
+  registry: swift-package-manager
+  name: appnexus/mobile-sdk-ios-mediation-google
+  url: https://github.com/appnexus/mobile-sdk-ios-mediation-google
+  version: null
+  published: null
+  official: true
+  note: >-
+    Google mediation adapter, distributed by SPM. Checked - the repository publishes no
+    release tags, so a consumer resolving this package cannot pin a version; last commit
+    2026-07-13. Recorded as null with this note rather than omitted.
+- language: swift
+  platform: ios
+  registry: swift-package-manager
+  name: appnexus/mobile-sdk-ios-mediation-facebook
+  url: https://github.com/appnexus/mobile-sdk-ios-mediation-facebook
+  version: null
+  published: null
+  official: true
+  note: Facebook Audience Network mediation adapter; no release tags published, last commit 2026-07-13.
+- language: swift
+  platform: ios
+  registry: swift-package-manager
+  name: appnexus/mobile-sdk-ios-mediation-vungle
+  url: https://github.com/appnexus/mobile-sdk-ios-mediation-vungle
+  version: null
+  published: null
+  official: true
+  note: Vungle mediation adapter; no release tags published, last commit 2026-07-13.
+- language: swift
+  platform: ios
+  registry: swift-package-manager
+  name: appnexus/mobile-sdk-ios-mediation-smartadserver
+  url: https://github.com/appnexus/mobile-sdk-ios-mediation-smartadserver
+  version: null
+  published: null
+  official: true
+  note: Smart AdServer mediation adapter; no release tags published, last commit 2026-07-13.
+- language: javascript
+  registry: npm
+  name: lucid-ui
+  url: https://www.npmjs.com/package/lucid-ui
+  install: npm install lucid-ui
+  repo: https://github.com/appnexus/lucid
+  version: 8.16.0
+  published: '2022-06-08'
+  official: true
+  maintained: false
+  note: >-
+    "A UI component library from Xandr." React design system, not an API client.
+    Unmaintained since 2022. Detailed in components/appnexus-components.yml.
+- language: javascript
+  registry: npm
+  name: anx-cli
+  url: https://www.npmjs.com/package/anx-cli
+  install: npm install anx-cli -g
+  repo: https://github.com/appnexus/anx-cli
+  version: 0.1.10
+  published: '2016-03-31'
+  official: true
+  maintained: false
+  note: >-
+    AppNexus HBAPI Command Line Interface. Abandoned in 2016. See cli/appnexus-cli.yml.
+- language: python
+  registry: pypi
+  name: pyrobuf
+  url: https://pypi.org/project/pyrobuf/
+  install: pip install pyrobuf
+  repo: https://github.com/appnexus/pyrobuf
+  version: 0.9.3
+  published: '2020-04-05'
+  official: true
+  maintained: false
+  api_client: false
+  note: >-
+    "A Cython alternative to Google's Python Protobuf library." Infrastructure the company
+    open-sourced, not a Digital Platform API client. Listed for completeness; last PyPI
+    release 2020-04-05, last repo push 2023-09-22.
+currency_summary:
+  api_client_libraries: 1
+  actively_released: [anx-api, appnexus-sdk, appnexus-instreamvideo, mobile-sdk-ios-spm]
+  stale_or_abandoned: [AppNexusSDK (CocoaPods, 4 minors behind), lucid-ui, anx-cli, pyrobuf]
+  languages_with_a_dpa_client: [javascript]
+  gap: >-
+    No first-party Python, Java, Go, Ruby, PHP or .NET client exists for the Digital
+    Platform API. Every example in the Microsoft Learn reference is raw curl.

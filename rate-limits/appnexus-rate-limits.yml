@@ -1,0 +1,126 @@
+generated: '2026-08-12'
+method: searched
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
+docs:
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-best-practices
+api: Digital Platform API
+base_url: https://api.appnexus.com
+limit_count: 4
+summary: >-
+  Xandr rate-limits the Digital Platform API at BOTH the user level and the service level.
+  The published numbers are deliberately not fixed - "These limits, set by the service, may
+  change over time" - so the contract an integrator codes against is the RESPONSE HEADERS,
+  not a documented number. Two distinct exhaustion codes are used: 429 for the user-level
+  limit and 503 for the service-level limit; both carry x-ratelimit-code and Retry-After.
+limits:
+- id: user-level-throttle
+  scope: per-user
+  window: service-defined
+  limit: null
+  limit_note: >-
+    Not published as a number. Xandr states rate limiting is implemented "at both the user
+    and service levels" and that "these limits, set by the service, may change over time".
+  status_on_exhaustion: 429
+  signal: x-ratelimit-code header present on the 429
+- id: service-level-throttle
+  scope: per-service
+  window: service-defined
+  limit: null
+  limit_note: >-
+    HTTP 503 "occurs when the service is overwhelmed by requests and is limiting new ones".
+    A 503 caused by rate limiting is distinguishable from a genuine outage only by the
+    presence of the x-ratelimit-code header.
+  status_on_exhaustion: 503
+  signal: x-ratelimit-code header present on the 503
+- id: authentication-frequency
+  scope: per-user
+  window: 5 minutes
+  limit: 10
+  unit: successful authentications
+  detail: >-
+    "The API permits you to authenticate successfully 10 times per 5-minute period. Any
+    subsequent authentication attempts within those 5 minutes will result in an error."
+    A token stays valid 2 hours, so re-authenticating per request will trip this.
+  best_practice: >-
+    Listen for the NOAUTH error_id in call responses and re-authenticate only after
+    receiving it.
+- id: get-response-size
+  scope: per-request
+  window: per-response
+  limit: 100
+  unit: objects
+  detail: >-
+    "The maximum number of objects that can be returned in a given GET response is 100."
+    Paginate with start_element / num_elements. Applies to non-GET services too, e.g. the
+    Creative Search Service.
+response_headers:
+  on_429:
+  - name: x-ratelimit-code
+    meaning: The HTTP code returned when the call was rate limited (429).
+  - name: retry-after
+    meaning: Seconds to wait before retrying the request.
+  - name: x-ratelimit-count
+    meaning: Total calls the user has made within the limit period.
+  - name: x-an-user-id
+    meaning: The user ID that was limited.
+  on_503:
+  - name: x-ratelimit-code
+    meaning: The HTTP code returned when the call was rate limited (503).
+  - name: retry-after
+    meaning: Seconds to wait before retrying the request.
+  standard_ratelimit_headers: false
+  standard_note: >-
+    Xandr does not emit the IETF draft RateLimit / RateLimit-Policy headers, nor the
+    X-RateLimit-Limit / X-RateLimit-Remaining / X-RateLimit-Reset triad. It uses a
+    proprietary x-ratelimit-code + x-ratelimit-count pair alongside the standard
+    Retry-After.
+deprecated_headers:
+  note: >-
+    "The following headers in responses are deprecated and will be removed in the future.
+    They do not provide any relevant information anymore."
+  headers:
+  - x-count-read
+  - x-count-write
+  - x-rate-limits
+  - x-ratelimit-read
+  - x-ratelimit-write
+  - x-ratelimit-system
+concurrency:
+  limit: null
+  note: >-
+    Earlier AppNexus documentation published a 15-concurrent-request cap that returned
+    HTTP 200 with an error payload. The current api-usage-constraints page no longer
+    states a concurrency number; it now describes only the 429/503 header contract.
+    Recorded as null rather than carrying forward an unverifiable figure.
+object_limits:
+  service: Object Limit Service
+  docs: https://learn.microsoft.com/en-us/xandr/digital-platform-api/object-limit-service
+  note: >-
+    Separate from rate limiting: a per-member cap on how many objects may exist. Both
+    active and inactive objects count, except creatives, where only non-expired creatives
+    count (a creative expires after 45 days with no serve and no modification). Email
+    notifications fire at 85%, 95% and 100% of a limit, to the addresses in the
+    sherlock_notify_email field of the Member Service.
+  defaults:
+    creatives_per_member: 10000
+    campaigns_per_member: 10000
+    line_items_per_member: 3000
+    placements_per_member: 20000
+    sites_per_member: 10000
+    publishers_per_member: 3000
+    domains_per_domain_list: 30000
+    segments_targeted_per_profile: 400
+    segment_groups_targeted_per_profile: 400
+    content_categories_targeted_per_profile: 300
+    platform_content_categories_targeted_per_profile: 300
+    postal_codes_targeted_per_profile: 4000
+    publishers_targeted_per_profile: 300
+    placement_groups_targeted_per_profile: 100
+    placements_targeted_per_profile: 250
+    deals_targeted_per_member: 1000
+    profiles_targeted_per_member: 100
+    inventory_sources_targeted_per_profile: deprecated
+cross_links:
+  conventions: conventions/appnexus-conventions.yml
+  errors: errors/appnexus-error-codes.yml

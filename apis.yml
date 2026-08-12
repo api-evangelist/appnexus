@@ -4,9 +4,14 @@ description: >-
   AppNexus was a New York-based programmatic advertising technology company that ran one of the
   largest independent real-time online ad exchanges alongside a cloud-based buy-side and sell-side
   platform for advertisers, agencies, and publishers. AT&T acquired AppNexus in 2018 and rebranded
-  it Xandr; it is now part of Microsoft. Its developer surface lives on as the Xandr Digital Platform
-  API (host api.appnexus.com) - a RESTful JSON API for campaign, creative, inventory, deal, and
-  reporting operations - plus the first-party AppNexus mobile advertising SDKs for Android and iOS.
+  it Xandr; Microsoft acquired Xandr in 2022 and productized it as Microsoft Monetize (sell-side)
+  and Microsoft Invest (buy-side). Its developer surface lives on as the Digital Platform API
+  (host api.appnexus.com) - a RESTful JSON API of roughly 150 services covering advertisers,
+  insertion orders, line items, campaigns, creatives, publishers, sites, placements, deals and
+  reporting - plus the actively released AppNexus mobile advertising SDKs for Android and iOS.
+  Microsoft is discontinuing the Invest DSP effective 28 February 2026; the Monetize sell-side
+  platform and the API remain live, documented on Microsoft Learn. No OpenAPI, MCP server or
+  agent card is published, and API access is restricted to contracted customers.
   This profile was enriched by the API Evangelist pipeline from the public developer documentation.
 accessModel:
   pricing: unknown
@@ -31,7 +36,7 @@ x-tier-reason: portfolio-lead
 x-successor: xandr
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-08-12'
 tags:
 - Company
 - Adtech
@@ -58,11 +63,17 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/xandr/digital-platform-api/
   - type: APIReference
-    url: https://learn.microsoft.com/xandr/digital-platform-api/api-services
+    url: https://learn.microsoft.com/en-us/xandr/digital-platform-api/reference
   - type: Authentication
     url: authentication/appnexus-authentication.yml
   - type: Conventions
     url: conventions/appnexus-conventions.yml
+  - type: RateLimits
+    url: rate-limits/appnexus-rate-limits.yml
+  - type: DataModel
+    url: data-model/appnexus-data-model.yml
+  - type: ErrorCatalog
+    url: errors/appnexus-error-codes.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -76,7 +87,7 @@ common:
 - type: Documentation
   url: https://learn.microsoft.com/xandr/digital-platform-api/
 - type: APIReference
-  url: https://learn.microsoft.com/xandr/digital-platform-api/api-services
+  url: https://learn.microsoft.com/en-us/xandr/digital-platform-api/reference
 - type: GettingStarted
   url: https://learn.microsoft.com/xandr/digital-platform-api/api-onboarding-process
 - type: GitHubOrganization
@@ -90,12 +101,26 @@ common:
 - type: Lifecycle
   url: lifecycle/appnexus-lifecycle.yml
 - type: Deprecation
-  url: https://learn.microsoft.com/xandr/digital-platform-api/breaking-changes
+  url: https://learn.microsoft.com/en-us/xandr/digital-platform-api/breaking-changes
+- type: StatusPage
+  name: Xandr Status
+  url: https://status.xandr.com
 - type: ChangeLog
-  url: https://learn.microsoft.com/xandr/digital-platform-api/api-release-notes
-- type: Sandbox
-  url: sandbox/appnexus-sandbox.yml
+  name: Microsoft Monetize release notes
+  url: https://learn.microsoft.com/en-us/xandr/monetize/release-notes
+- type: ChangeLog
+  name: Changelog surfaces (artifact)
+  url: changelog/appnexus-changelog.yml
+- type: Support
+  name: Xandr Customer Support Portal
+  url: https://help.xandr.com
+- type: Login
+  name: Microsoft Monetize console
+  url: https://monetize.xandr.com/login
 - type: Packages
+  url: packages/appnexus-packages.yml
+- type: SDKs
+  name: anx-api (Digital Platform API JavaScript client)
   url: packages/appnexus-packages.yml
 - type: SDKs
   name: AppNexus Android Mobile SDK
@@ -103,12 +128,62 @@ common:
 - type: SDKs
   name: AppNexus iOS Mobile SDK
   url: packages/appnexus-packages.yml
+- type: Components
+  url: components/appnexus-components.yml
+- type: RateLimits
+  url: rate-limits/appnexus-rate-limits.yml
+- type: Plans
+  url: plans/appnexus-plans-pricing.yml
+- type: DataModel
+  url: data-model/appnexus-data-model.yml
+- type: Conformance
+  url: conformance/appnexus-conformance.yml
+- type: Compliance
+  name: Industry standards bodies Xandr states membership in (IAB Tech Lab, NAI, TAG, Prebid.org, W3C)
+  url: conformance/appnexus-conformance.yml
 - type: DomainSecurity
   url: security/appnexus-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/appnexus-vulnerability-disclosure.yml
+- type: Security
+  name: Microsoft Security Response Center (parent-company disclosure channel for Xandr)
+  url: security/appnexus-vulnerability-disclosure.yml
 - type: LLMsTxt
   url: llms/appnexus-llms.txt
+x-pointer-notes:
+  withdrawn:
+  - type: Sandbox
+    reason: >-
+      Withdrawn 2026-08-12. api-test.appnexus.com appears only inside a curl -v trace in
+      the docs and 404s when probed; Xandr publishes no sandbox, test mode or test
+      credentials. See sandbox/appnexus-sandbox.yml.
+  not_emitted:
+  - type: WellKnown
+    reason: >-
+      Every /.well-known path 404s on api.appnexus.com. www.appnexus.com and www.xandr.com
+      301 to about.ads.microsoft.com, whose SPA answers 200 with an HTML shell for every
+      path - a soft-404, not a document. See well-known/appnexus-well-known.yml.
+  - type: AgentCard
+    reason: no agent-card.json or agent.json on any host; search-only artifact, nothing written.
+  - type: CLI
+    reason: >-
+      anx-cli exists on npm but its only release is 0.1.10 from 2016-03-31 and the current
+      documentation never mentions a CLI. Artifact kept at cli/appnexus-cli.yml as an
+      abandonment record; no pointer emitted. See cli/appnexus-cli.yml.
+  - type: Idempotency
+    reason: no Idempotency-Key contract is documented anywhere in the Digital Platform API.
+  - type: [OpenAPI, AsyncAPI, Webhooks, MCPServer, AgentSkill, OAuthScopes, Overlay, Protobuf]
+    reason: >-
+      No machine-readable contract of any kind is published, and there is no event/webhook
+      surface, MCP server or OAuth scope model to describe. Skills and overlays have no
+      spec to ground them in.
+  - type: [Pricing, TermsOfService, PrivacyPolicy]
+    reason: >-
+      Explicitly not public - "The Xandr Service Policies, Privacy Regulations, Platform
+      Terms of Service and Online Terms are confidential and tied to specific contracts
+      between Xandr and its customers." See plans/appnexus-plans-pricing.yml.
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 8
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence

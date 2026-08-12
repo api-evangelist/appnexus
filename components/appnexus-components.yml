@@ -1,0 +1,82 @@
+generated: '2026-08-12'
+method: searched
+source: https://learn.microsoft.com/en-us/xandr/mobile-sdk/
+docs:
+- https://learn.microsoft.com/en-us/xandr/mobile-sdk/
+- https://learn.microsoft.com/en-us/xandr/mobile-sdk/ios-sdk-ad-units
+summary: >-
+  AppNexus/Xandr's client-side component surface is an AD-RENDERING component set, not an
+  embedded-dashboard or checkout-element set. The mobile SDKs ship named ad-unit view
+  classes that a publisher app drops into its layout, and a separate React design system
+  (Lucid) was open-sourced for building console UIs. There is no embeddable reporting or
+  console widget for the Digital Platform API itself.
+families:
+- name: Mobile ad units
+  kind: native-view-components
+  platforms: [ios, android]
+  loader: AppNexus Mobile SDK (see packages/appnexus-packages.yml)
+  docs: https://learn.microsoft.com/en-us/xandr/mobile-sdk/ios-sdk-ad-units
+  components:
+  - name: Banner
+    doc_page: show-banners-on-ios
+  - name: Banner Native
+    doc_page: show-banner-native-on-ios
+  - name: Native Assembly Renderer
+    doc_page: native-assembly-renderer-on-ios
+  - name: High Impact Media Type
+    doc_page: show-high-impact-media-type-on-ios
+  - name: Interstitial
+    doc_page: show-interstitials-ads-on-ios
+  - name: Native
+    doc_page: show-native-ads-on-ios
+  - name: Banner Video (Outstream)
+    doc_page: show-multi-format-banner-ads-on-ios
+  - name: Instream Video
+    doc_page: show-instream-video-ads-on-ios
+  - name: Multi Ad Request
+    doc_page: multi-ad-request-for-ios
+  note: >-
+    Documented per-platform with matching Android pages under the same Mobile SDK section.
+    Supporting classes named in the docs include ANVideoPlayerSettings and ANAdResponseInfo.
+- name: Lucid
+  kind: react-design-system
+  registry: npm
+  package: lucid-ui
+  url: https://www.npmjs.com/package/lucid-ui
+  repo: https://github.com/appnexus/lucid
+  version: 8.16.0
+  published: '2022-06-08'
+  official: true
+  maintained: false
+  description: '"A UI component library from Xandr."'
+  note: >-
+    General-purpose React component/design system open-sourced by the company, not an
+    API-embed widget set - it does not talk to api.appnexus.com. Last npm release
+    2022-06-08; last GitHub release v5.3.4 in January 2020. Included because it is a
+    genuine first-party client-side component library, flagged unmaintained.
+- name: Consent Management Platform reference implementation
+  kind: web-consent-component
+  repo: https://github.com/appnexus/cmp
+  official: true
+  maintained: false
+  last_push: '2022-12-09'
+  description: '"Consent Management Platform Reference Implementation"'
+  note: >-
+    Browser-side consent UI implementing the IAB consent signalling used by the exchange.
+    Reference implementation, archived in practice since 2022.
+- name: HTML5 client library
+  kind: web-creative-library
+  repo: https://github.com/appnexus/appnexus-html5-lib
+  official: true
+  maintained: false
+  last_push: '2018-07-30'
+  description: >-
+    "The AppNexus HTML5 client library helps integrate HTML5 ads into websites."
+  note: Not published to npm; source-only and untouched since 2018.
+absent:
+  embedded_dashboard: false
+  hosted_checkout_or_elements: false
+  web_components: false
+  note: >-
+    No web-component/custom-element distribution and no embeddable Monetize/Invest console
+    surface is published for third parties.

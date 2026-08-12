@@ -1,9 +1,10 @@
-generated: '2026-07-17'
+generated: '2026-08-12'
 method: searched
-source: https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-semantics
 docs:
-  - https://learn.microsoft.com/xandr/digital-platform-api/api-semantics
-  - https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-semantics
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-best-practices
+  - https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
 api: Digital Platform API
 base_url: https://api.appnexus.com
 protocol: "HTTP/1.1 or later; HTTPS only (non-secure HTTP not available)"
@@ -46,11 +47,28 @@ error_envelope:
   fields: [error_id, error]
   note: "error_id is machine-usable; error is a verbose human description. See errors/appnexus-error-codes.yml"
 rate_limiting:
-  throttle_status: 429
-  header: Retry-After
-  detail: "429 Too Many Requests when per-minute limit exceeded; Retry-After = seconds to wait"
-  concurrency_limit: "15 concurrent requests; excess returns HTTP 200 with an error payload"
-  reference: https://learn.microsoft.com/xandr/digital-platform-api/api-usage-constraints
+  throttle_status: [429, 503]
+  detail: >-
+    Rate limiting runs at BOTH the user level (429 Too Many Requests) and the service level
+    (503 Service Unavailable). A 503 caused by throttling is distinguishable from a real
+    outage only by the presence of the x-ratelimit-code header. No numeric limit is
+    published: "These limits, set by the service, may change over time."
+  headers_429: [x-ratelimit-code, retry-after, x-ratelimit-count, x-an-user-id]
+  headers_503: [x-ratelimit-code, retry-after]
+  deprecated_headers: [x-count-read, x-count-write, x-rate-limits, x-ratelimit-read,
+    x-ratelimit-write, x-ratelimit-system]
+  standard_headers: false
+  standard_headers_note: >-
+    Not the IETF RateLimit draft headers and not the X-RateLimit-Limit/Remaining/Reset
+    triad; only Retry-After is standard.
+  concurrency_limit: null
+  concurrency_note: >-
+    Earlier AppNexus documentation published a 15-concurrent-request cap returning HTTP 200
+    with an error payload. The current api-usage-constraints page no longer states it, so
+    it is recorded as null rather than carried forward unverified.
+  auth_frequency_limit: "10 successful authentications per 5-minute period"
+  detail_artifact: rate-limits/appnexus-rate-limits.yml
+  reference: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
 versioning:
   style: uri-path
   current: "https://api.appnexus.com/ or /current/"
@@ -60,3 +78,6 @@ cross_links:
   errors: errors/appnexus-error-codes.yml
   lifecycle: lifecycle/appnexus-lifecycle.yml
   authentication: authentication/appnexus-authentication.yml
+  rate_limits: rate-limits/appnexus-rate-limits.yml
+  data_model: data-model/appnexus-data-model.yml
+  conformance: conformance/appnexus-conformance.yml

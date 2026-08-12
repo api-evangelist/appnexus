@@ -1,0 +1,37 @@
+generated: '2026-08-12'
+method: searched
+source: https://www.npmjs.com/package/anx-cli
+api: Digital Platform API
+status: abandoned
+summary: >-
+  AppNexus shipped a first-party command line interface for the Digital Platform API,
+  anx-cli ("AppNexus HBAPI Command Line Interface"), published to npm and to
+  github.com/appnexus/anx-cli. It has not been touched since 2016 and there is no
+  successor CLI: the current documentation never mentions a command line client, and the
+  only maintained first-party client is the anx-api JavaScript library. Recorded as an
+  abandonment finding, not as a live capability.
+clis:
+- name: anx-cli
+  description: AppNexus HBAPI Command Line Interface
+  registry: npm
+  package: anx-cli
+  url: https://www.npmjs.com/package/anx-cli
+  repo: https://github.com/appnexus/anx-cli
+  install: npm install anx-cli -g
+  version: 0.1.10
+  published: '2016-03-31'
+  official: true
+  maintained: false
+  last_repo_push: '2016-03-31'
+  note: >-
+    Latest npm release 0.1.10 (2016-03-31) and the GitHub repo's last push are the same
+    day - it was published once and never revisited. Ten years stale against an API whose
+    reference docs were last updated 2025-10-22 and whose SDKs shipped v9.13.0 in June
+    2026. No GitHub releases were ever cut.
+current_state:
+  maintained_cli: false
+  documented_in_provider_docs: false
+  finding: >-
+    An operator automating Xandr today has no supported CLI. The practical substitute is
+    curl against api.appnexus.com (which is how every example in the Microsoft Learn
+    reference is written) or the anx-api npm library. See packages/appnexus-packages.yml.

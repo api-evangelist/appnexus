@@ -1,0 +1,37 @@
+generated: '2026-08-12'
+method: searched
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/xandr-api-support
+docs:
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/xandr-api-support
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-onboarding-process
+- https://learn.microsoft.com/en-us/xandr/policies-regulations/
+api: Digital Platform API
+plan_count: 0
+public_pricing: false
+model: contract-only
+note: >-
+  Xandr publishes no plans, tiers, or list prices for the Digital Platform API. There is
+  no self-serve sign-up and no free tier. The support page states the position plainly:
+  "The Xandr API services are for use by current Xandr customers. Service endpoints are
+  available only to customers with active accounts and API permissions." API credentials
+  are issued through the API Onboarding Process, which runs through a Xandr/Microsoft
+  account representative. Commercial terms are explicitly not public - the Policies and
+  Regulations page states that "The Xandr Service Policies, Privacy Regulations, Platform
+  Terms of Service and Online Terms are confidential and tied to specific contracts
+  between Xandr and its customers." Platform economics are ad-spend-based (media fees,
+  rev-share, data fees) negotiated per contract, not API-call-metered.
+plans: []
+onboarding:
+  url: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-onboarding-process
+  self_serve: false
+  requires: active Xandr/Microsoft Monetize member account with API permissions enabled
+evidence:
+- url: https://learn.microsoft.com/en-us/xandr/digital-platform-api/xandr-api-support
+  status: 200
+  finding: API access restricted to current customers with active accounts
+- url: https://learn.microsoft.com/en-us/xandr/policies-regulations/
+  status: 200
+  finding: terms of service and platform policies are confidential, contract-bound
+- url: https://learn.microsoft.com/en-us/xandr/monetize/pricing
+  status: 404
+  finding: no pricing page published under the Monetize documentation

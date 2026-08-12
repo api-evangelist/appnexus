@@ -1,16 +1,53 @@
-generated: '2026-07-17'
+generated: '2026-08-12'
 method: searched
-source: https://learn.microsoft.com/xandr/digital-platform-api/api-best-practices
+source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-onboarding-process
+docs:
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-onboarding-process
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-best-practices
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/xandr-api-support
 api: Digital Platform API
+sandbox_published: false
+correction: >-
+  A previous pass recorded api-test.appnexus.com as a documented test environment. Re-read
+  on 2026-08-12: that hostname appears exactly once in the documentation, inside the Host
+  header of a `curl -v` output sample on the API Best Practices page. It is never named as
+  an environment, never given a base URL, and has no onboarding path. Probing it returns
+  HTTP 404 on / and on every /.well-known path. Xandr publishes NO sandbox, no test mode,
+  no test credentials and no synthetic fixtures. Recorded as an honest absence, and the
+  apis.yml Sandbox pointer has been withdrawn accordingly.
 environments:
-  - name: production
-    base_url: https://api.appnexus.com
-    note: "Live environment - changes affect production. Only authorized users should alter data."
-  - name: test
-    base_url: https://api-test.appnexus.com
-    note: "Test host referenced in the API documentation examples for exercising calls without touching production."
-credentials:
-  model: "Username/password issued during the API Onboarding Process; exchanged at /auth for a session token."
-  onboarding: https://learn.microsoft.com/xandr/digital-platform-api/api-onboarding-process
-notes:
-  - No public self-serve sandbox keys or synthetic test tokens are published; access requires a Xandr member account.
+- name: production
+  base_url: https://api.appnexus.com
+  status: live
+  note: >-
+    The only environment. Every documented example targets it. "Live environment - changes
+    affect production."
+- name: api-test.appnexus.com
+  base_url: null
+  status: not-a-documented-environment
+  probe_status: 404
+  note: >-
+    Appears only inside a verbose curl trace on the API Best Practices page. Not published
+    as an environment; do not treat as a sandbox.
+test_mode:
+  present: false
+  key_prefixes: null
+  test_data: null
+  time_simulation: null
+  note: >-
+    No test/live key split (credentials are a username/password pair, not a prefixed key),
+    no test cards or magic identifiers, no test clocks, no fixture or trigger tooling.
+access:
+  self_serve: false
+  model: >-
+    Username/password issued through the API Onboarding Process, exchanged at POST /auth
+    for a session token.
+  onboarding: https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-onboarding-process
+  gate: >-
+    "The Xandr API services are for use by current Xandr customers. Service endpoints are
+    available only to customers with active accounts and API permissions."
+  gate_source: https://learn.microsoft.com/en-us/xandr/digital-platform-api/xandr-api-support
+finding: >-
+  There is no way for a developer without a signed Xandr contract to make a single
+  successful call. The reference documentation is fully public and readable; the runtime
+  is not reachable at all. That is a sales gate on execution, not on learning.

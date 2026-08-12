@@ -1,0 +1,135 @@
+generated: '2026-08-12'
+method: searched
+source: https://learn.microsoft.com/en-us/xandr/policies-regulations/online-advertising-self-regulatory-organizations
+docs:
+- https://learn.microsoft.com/en-us/xandr/policies-regulations/online-advertising-self-regulatory-organizations
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-semantics
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/api-usage-constraints
+- https://learn.microsoft.com/en-us/xandr/digital-platform-api/token-based-api-authentication
+api: Digital Platform API
+summary: >-
+  The Digital Platform API is a hand-rolled REST/JSON API predating most of the modern
+  HTTP interop RFCs, and it conforms to almost none of them - no OpenAPI, no OAuth 2.0,
+  no RFC 9457 problem+json, no standard RateLimit headers. Where AppNexus/Xandr DOES
+  carry heavy standards weight is the ad-tech industry layer: it holds board seats at
+  IAB Tech Lab, NAI, TAG and Prebid.org and states those memberships in its own docs.
+conformance:
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document is published at any AppNexus/Xandr host or in the
+    github.com/appnexus org; api.appnexus.com/openapi.json and /swagger.json both 404.
+    The ~150 services are documented only as prose reference pages on Microsoft Learn.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    Authentication is a proprietary username/password -> session-token exchange at
+    POST /auth, carried in an Authorization header or a cookie. No authorization server,
+    no scopes, no grant types. /.well-known/oauth-authorization-server 404s.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on api.appnexus.com.
+- id: jwt
+  conforms: true
+  evidence: >-
+    "For the Digital Platform API, we've implemented a signed token-based authentication
+    system. This system uses JSON Web Tokens (JWT) to help ensure your sessions are as
+    secure as possible." - Token-based API Authentication.
+  docs: https://learn.microsoft.com/en-us/xandr/digital-platform-api/token-based-api-authentication
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors are returned inside the proprietary {"response": {"error_id": ..., "error": ...}}
+    envelope, not application/problem+json. See errors/appnexus-error-codes.yml.
+- id: rfc6585-retry-after
+  conforms: true
+  evidence: >-
+    429 Too Many Requests and 503 Service Unavailable are both returned with a Retry-After
+    header carrying seconds to wait. See rate-limits/appnexus-rate-limits.yml.
+- id: ietf-ratelimit-headers
+  conforms: false
+  evidence: >-
+    Uses proprietary x-ratelimit-code / x-ratelimit-count / x-an-user-id instead of the
+    IETF RateLimit / RateLimit-Policy draft headers or the X-RateLimit-* triad.
+- id: pagination
+  conforms: true
+  style: offset
+  evidence: >-
+    start_element / num_elements query parameters, hard cap of 100 objects per GET
+    response, with a "count" property on every GET response giving the total matching.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key contract is documented anywhere in the Digital Platform API docs.
+    PUT is a field-merge; arrays are overwritten unless ?append=true is supplied.
+- id: rest-http-verbs
+  conforms: true
+  evidence: >-
+    POST=create, GET=read, PUT=update, DELETE=delete, applied consistently across services.
+- id: https-only
+  conforms: true
+  evidence: >-
+    "HTTPS only (non-secure HTTP not available)"; TLS 1.2 observed on api.appnexus.com
+    with a certificate valid to 2027-01-10.
+industry_standards:
+- id: iab-tech-lab
+  organization: IAB Tech Lab
+  role: Board of Directors member
+  evidence: >-
+    "Xandr is a member of the Board of Directors, and various working groups like IAB
+    Programmatic Supply Chain, Privacy & Research Commit Group, Global Privacy Framework
+    Initiative, Project Research etc. of IAB Tech Lab."
+- id: iab
+  organization: Interactive Advertising Bureau (national chapters)
+  role: member
+  evidence: >-
+    "Xandr is a member of IABs in multiple countries worldwide (e.g. IAB France)."
+- id: nai
+  organization: Network Advertising Initiative
+  role: member and Board of Directors
+  evidence: '"Xandr is an NAI member and sits on NAI''s Board of Directors."'
+- id: prebid-org
+  organization: Prebid.org
+  role: Board of Directors, chairs CTV Committee/CTV-OTT Task force, co-chairs Prebid Server Committee
+  evidence: >-
+    "Xandr is a member of the Board of Directors, and chairs CTV Committee/CTV-OTT Task
+    force and co-chairs Prebid Server Committee." Also names Xandr staff as developers of
+    PBS-Go, PBC-Go, GoGDPR and client-side Prebid.js, and as maintainers of docs.prebid.org.
+- id: tag
+  organization: Trustworthy Accountability Group
+  role: Board of Directors, Leadership Council, co-chairs the anti-malware working group
+  evidence: >-
+    "Xandr is a member of the Board of Directors, the Leadership Council, and various
+    working groups. Xandr also co-chairs the anti-malware working group."
+- id: w3c
+  organization: World Wide Web Consortium
+  role: member
+  evidence: >-
+    "Xandr is member of W3C Improving Web Advertising Business Group and Web Platform
+    Incubator Community Group."
+- id: daa
+  organization: Digital Advertising Alliance (and DAAC, EDAA)
+  role: described as the governing self-regulatory bodies for the markets Xandr operates in
+  evidence: >-
+    Documented on the same page; the page describes the DAA/DAAC/EDAA programs but does
+    not state a Xandr membership in the emphatic form used for IAB Tech Lab, NAI, Prebid,
+    TAG and W3C. Recorded as context rather than a claimed membership.
+- id: iab-tcf
+  organization: IAB Europe Transparency & Consent Framework
+  role: platform supports CMP/consent signalling
+  evidence: >-
+    github.com/appnexus/cmp is the first-party "Consent Management Platform Reference
+    Implementation"; the Digital Platform API exposes a Shared Platform Privacy Service
+    and a Seller CMP Analytics Report. Framework version not stated publicly.
+enterprise_compliance:
+  note: >-
+    Xandr is a Microsoft product line (Microsoft Monetize / Microsoft Invest). Named
+    certifications are published by the parent, not by any xandr.com or appnexus.com host.
+    See security/appnexus-trust-center.yml, which states that provenance explicitly.
+  parent: Microsoft Corporation
+  trust_center: https://www.microsoft.com/en-us/trust-center
+cross_links:
+  authentication: authentication/appnexus-authentication.yml
+  errors: errors/appnexus-error-codes.yml
+  rate_limits: rate-limits/appnexus-rate-limits.yml
+  trust_center: security/appnexus-trust-center.yml
