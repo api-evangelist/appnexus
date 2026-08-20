@@ -39,6 +39,16 @@ created: '2026-07-17'
 modified: '2026-08-12'
 tags:
 - Company
+- AdTech
+- Advertising
+- Programmatic
+- Ad Exchange
+- DSP
+- SSP
+- Mobile SDK
+- Marketing
+tags_raw:
+- Company
 - Adtech
 - Advertising
 - Programmatic
@@ -56,6 +66,10 @@ apis:
   humanURL: https://learn.microsoft.com/xandr/digital-platform-api/
   baseURL: https://api.appnexus.com
   tags:
+  - Advertising
+  - Programmatic
+  - AdTech
+  tags_raw:
   - Advertising
   - Programmatic
   - Adtech
