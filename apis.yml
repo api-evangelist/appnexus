@@ -13,6 +13,17 @@ description: >-
   platform and the API remain live, documented on Microsoft Learn. No OpenAPI, MCP server or
   agent card is published, and API access is restricted to contracted customers.
   This profile was enriched by the API Evangelist pipeline from the public developer documentation.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
