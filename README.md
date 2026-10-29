@@ -64,6 +64,107 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-AppNexus is a company surfaced as a portfolio company of first-round-capital and added to the API Evangelist network as a stub for enrichment. Sector: adtech. This profile is a lead awaiting the enrichment pipeline.
+AppNexus was a New York-based programmatic advertising technology company that ran one of the largest independent real-time online ad exchanges alongside a cloud-based buy-side and sell-side platform for advertisers, agencies, and publishers. AT&T acquired AppNexus in 2018 and rebranded it Xandr; Microsoft acquired Xandr in 2022 and productized it as Microsoft Monetize (sell-side) and Microsoft Invest (buy-side). Its developer surface lives on as the Digital Platform API (host api.appnexus.com) - a RESTful JSON API of roughly 150 services covering advertisers, insertion orders, line items, campaigns, creatives, publishers, sites, placements, deals and reporting - plus the actively released AppNexus mobile advertising SDKs for Android and iOS. Microsoft is discontinuing the Invest DSP effective 28 February 2026; the Monetize sell-side platform and the API remain live, documented on Microsoft Learn. No OpenAPI, MCP server or agent card is published, and API access is restricted to contracted customers. This profile was enriched by the API Evangelist pipeline from the public developer documentation.
 
-Backed by: first-round-capital — https://www.appnexus.com
+**Areas:** Company · AdTech · Advertising · Programmatic · Ad Exchange · DSP · Supply Side Platform · Mobile SDK · Marketing
+
+## AppNexus on APIs.io
+
+Everything profiled for AppNexus is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/appnexus/](https://apis.io/providers/appnexus/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Digital Platform API](https://apis.io/apis/appnexus/digital-platform-api/) — RESTful JSON API for the AppNexus/Xandr programmatic advertising platform - manage advertisers, campaigns, line items, creatives, placements, inventory,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Appnexus Authentication](https://apis.io/security/appnexus/appnexus-authentication/)
+- [Appnexus Domain Security](https://apis.io/security/appnexus/appnexus-domain-security/)
+- [Appnexus Vulnerability Disclosure](https://apis.io/security/appnexus/appnexus-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Appnexus Plans Pricing](https://apis.io/plans/appnexus/appnexus-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Appnexus Rate Limits](https://apis.io/rate-limits/appnexus/appnexus-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.appnexus.com)
+- [Documentation](https://learn.microsoft.com/xandr/digital-platform-api/)
+- [Getting started](https://learn.microsoft.com/xandr/digital-platform-api/api-onboarding-process)
+- [API reference](https://learn.microsoft.com/en-us/xandr/digital-platform-api/reference)
+- [Support](https://help.xandr.com)
+- [Changelog](https://learn.microsoft.com/en-us/xandr/monetize/release-notes)
+- [Blog](https://about.ads.microsoft.com/en/resources/discover/insights)
+- [GitHub](https://github.com/appnexus)
+- [Status](https://status.xandr.com)
+
+## API Evangelist rating
+
+**Kin Score 39.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 84.2 |
+| Developer ergonomics | 64.3 |
+| Access clarity | 21.1 |
+
+**Agent readiness 7.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 27.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/appnexus/](https://apis.io/providers/appnexus/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for AppNexus: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/appnexus/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
